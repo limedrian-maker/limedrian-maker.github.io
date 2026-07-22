@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jake Edrian Lim — Computer Science Student & Developer</title>
+<meta name="description" content="Portfolio of Jake Edrian Lim — Computer Science student at DNSC, builder of DocuChain and I-Tech.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-void: #0a0d12;
+    --bg-panel: #10151d;
+    --bg-panel-2: #151b25;
+    --line: #232b38;
+    --text: #e8edf3;
+    --text-muted: #7d8798;
+    --accent: #3ed9c5;
+    --accent-dim: #23554f;
+    --amber: #f2a94e;
+    --violet: #8b85f7;
+    --radius: 3px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-void);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(62,217,197,0.06), transparent 40%),
+      radial-gradient(circle at 85% 30%, rgba(139,133,247,0.05), transparent 40%);
+    pointer-events:none;
+    z-index:0;
+  }
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spacing:-0.01em;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit; text-decoration:none;}
+  section{position:relative; z-index:1; padding:96px 8vw;}
+  .wrap{max-width:1100px; margin:0 auto;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 8vw;
+    background:rgba(10,13,18,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .logo{font-family:'IBM Plex Mono',monospace; font-size:14px; color:var(--accent); display:flex; align-items:center; gap:8px;}
+  .logo .dot{width:7px;height:7px;border-radius:50%;background:var(--accent); box-shadow:0 0 8px var(--accent); display:inline-block;}
+  .nav-links{display:flex; gap:32px; font-size:14px; color:var(--text-muted);}
+  .nav-links a{transition:color .2s;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-cta{
+    font-family:'IBM Plex Mono',monospace; font-size:13px;
+    border:1px solid var(--line); padding:8px 14px; border-radius:var(--radius);
+    transition:border-color .2s, color .2s;
+  }
+  .nav-cta:hover{border-color:var(--accent); color:var(--accent);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:88vh; display:flex; flex-direction:column; justify-content:center;
+    padding-top:60px;
+  }
+  .hero-chain-wrap{
+    max-width:1100px; margin:0 auto 48px; width:100%;
+  }
+  .hero-chain{width:100%; height:auto; display:block;}
+  .chain-node circle{fill:var(--bg-panel); stroke:var(--line); stroke-width:1.5;}
+  .chain-node.lit circle{stroke:var(--accent);}
+  .chain-node text{font-family:'IBM Plex Mono',monospace; font-size:9px; fill:var(--text-muted);}
+  .chain-node.lit text{fill:var(--accent);}
+  .chain-link{stroke:var(--line); stroke-width:1.5; stroke-dasharray:4 3;}
+  .chain-link.lit{stroke:var(--accent); stroke-dasharray:none;}
+
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent);
+    letter-spacing:0.02em; margin-bottom:18px;
+  }
+  .eyebrow::before{content:"// "; color:var(--text-muted);}
+  .hero h1{font-size:clamp(2.4rem, 6vw, 4.2rem); line-height:1.05; margin-bottom:22px;}
+  .hero h1 span{color:var(--accent);}
+  .lede{font-size:1.15rem; color:var(--text-muted); max-width:620px; margin-bottom:36px;}
+
+  .meta-row{display:flex; flex-wrap:wrap; gap:28px; margin-bottom:44px;}
+  .meta-item{font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--text-muted);}
+  .meta-item .k{color:var(--violet);}
+  .meta-item .v{color:var(--text);}
+
+  .cta-row{display:flex; gap:16px; flex-wrap:wrap;}
+  .btn{
+    padding:13px 24px; border-radius:var(--radius); font-size:14px; font-weight:500;
+    transition:all .2s; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary{background:var(--accent); color:#0a0d12;}
+  .btn-primary:hover{background:#5ce4d2; transform:translateY(-1px);}
+  .btn-ghost{border:1px solid var(--line); color:var(--text);}
+  .btn-ghost:hover{border-color:var(--text-muted);}
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section-head{margin-bottom:56px;}
+  .section-head .tag{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--amber); margin-bottom:10px; display:block;}
+  .section-head h2{font-size:2rem;}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:64px; align-items:start;}
+  .about-text p{color:var(--text-muted); margin-bottom:18px; font-size:1.02rem;}
+  .about-text strong{color:var(--text); font-weight:500;}
+  .block-card{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:24px; font-family:'IBM Plex Mono',monospace; font-size:12.5px;
+  }
+  .block-card .bh{color:var(--text-muted); border-bottom:1px solid var(--line); padding-bottom:12px; margin-bottom:12px; display:flex; justify-content:space-between;}
+  .block-card .bh .status{color:var(--accent);}
+  .block-row{display:flex; justify-content:space-between; padding:7px 0; border-bottom:1px dashed var(--line);}
+  .block-row:last-child{border-bottom:none;}
+  .block-row .k{color:var(--text-muted);}
+  .block-row .v{color:var(--text); text-align:right;}
+
+  /* ---------- PROJECTS ---------- */
+  .ledger{position:relative;}
+  .ledger::before{
+    content:""; position:absolute; left:15px; top:12px; bottom:12px; width:1px;
+    background:repeating-linear-gradient(to bottom, var(--accent-dim) 0 6px, transparent 6px 11px);
+  }
+  .project-block{
+    position:relative; padding-left:52px; margin-bottom:56px;
+  }
+  .project-block::before{
+    content:""; position:absolute; left:8px; top:6px; width:15px; height:15px;
+    border-radius:50%; background:var(--bg-panel); border:2px solid var(--accent);
+    box-shadow:0 0 0 4px var(--bg-void);
+  }
+  .project-hash{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--accent); margin-bottom:10px;}
+  .project-block h3{font-size:1.5rem; margin-bottom:6px;}
+  .project-role{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--violet); margin-bottom:16px; display:block;}
+  .project-desc{color:var(--text-muted); max-width:680px; margin-bottom:20px;}
+  .tag-row{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;}
+  .tag{
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--text-muted);
+    border:1px solid var(--line); padding:5px 10px; border-radius:2px;
+  }
+  .project-links{display:flex; gap:20px; font-size:13px;}
+  .project-links a{color:var(--text-muted); border-bottom:1px solid transparent; transition:all .2s;}
+  .project-links a:hover{color:var(--accent); border-color:var(--accent);}
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:32px;}
+  .skill-group{background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius); padding:24px;}
+  .skill-group h4{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--amber); margin-bottom:16px; text-transform:uppercase; letter-spacing:0.04em;}
+  .skill-list{display:flex; flex-wrap:wrap; gap:8px;}
+  .skill-pill{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text); background:var(--bg-panel-2); border:1px solid var(--line); padding:6px 11px; border-radius:2px;}
+
+  /* ---------- CONTACT ---------- */
+  .terminal{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:6px;
+    max-width:640px; overflow:hidden;
+  }
+  .terminal-bar{display:flex; gap:6px; padding:12px 16px; border-bottom:1px solid var(--line);}
+  .terminal-bar span{width:10px; height:10px; border-radius:50%; background:var(--line);}
+  .terminal-body{padding:24px; font-family:'IBM Plex Mono',monospace; font-size:13.5px;}
+  .terminal-body .prompt{color:var(--accent);}
+  .terminal-line{margin-bottom:10px; color:var(--text-muted);}
+  .terminal-line .v{color:var(--text);}
+  .terminal-line a{color:var(--violet); border-bottom:1px solid transparent;}
+  .terminal-line a:hover{border-color:var(--violet);}
+  .cursor{display:inline-block; width:7px; height:14px; background:var(--accent); vertical-align:middle; animation:blink 1s step-start infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  footer{padding:32px 8vw; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+  footer, footer a{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-muted);}
+  footer a:hover{color:var(--accent);}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  @media (max-width:840px){
+    .about-grid{grid-template-columns:1fr;}
+    .skills-grid{grid-template-columns:1fr;}
+    .nav-links{display:none;}
+    section{padding:64px 6vw;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><span class="dot"></span>JEL<span style="color:var(--text-muted)">.chain</span></div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a class="nav-cta" href="https://github.com/limedrian-maker" target="_blank" rel="noopener">github.com/limedrian-maker</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-chain-wrap">
+    <svg class="hero-chain" id="heroChain" viewBox="0 0 1100 90" preserveAspectRatio="xMidYMid meet"></svg>
+  </div>
+  <div class="wrap">
+    <p class="eyebrow">bs computer science · institute of computing, dnsc</p>
+    <h1>Jake “Edrian” Lim —<br>building things that can be <span>verified.</span></h1>
+    <p class="lede">Computer science student in Davao del Norte, PH, focused on systems where trust doesn't have to be taken on faith — blockchain-backed document integrity, and low-spec games built for players most studios skip.</p>
+    <div class="meta-row">
+      <div class="meta-item"><span class="k">role</span> <span class="v">— Capstone Lead · CTO, I-Tech</span></div>
+      <div class="meta-item"><span class="k">stack</span> <span class="v">— Node.js · React · Hyperledger Fabric · PostgreSQL</span></div>
+      <div class="meta-item"><span class="k">based</span> <span class="v">— Davao del Norte, Philippines</span></div>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#projects">View projects</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="reveal">
+      <p class="section-head"><span class="tag">01 — about</span></p>
+      <div class="about-text">
+        <p>I'm a computing student at the <strong>Institute of Computing, Davao del Norte State College (DNSC)</strong>, where most of my recent work has centered on one question: how do you prove a document — or a system — hasn't been quietly altered?</p>
+        <p>That question became <strong>DocuChain</strong>, my capstone project: a blockchain-based document integrity system built for LAN deployment on physical campus servers. Alongside it, I'm <strong>CTO of I-Tech</strong>, a small team building a 2D pixel RPG designed to actually run on the low-spec hardware common across Southeast Asia, Latin America, and Africa — not just the machines game studios test on.</p>
+        <p>I like guided, step-by-step problem solving over guesswork, and I tend to build in public with my team rather than alone.</p>
+      </div>
+    </div>
+    <div class="block-card reveal">
+      <div class="bh"><span>BLOCK #0001</span><span class="status">● VERIFIED</span></div>
+      <div class="block-row"><span class="k">name</span><span class="v">Jake Edrian Lim</span></div>
+      <div class="block-row"><span class="k">institution</span><span class="v">DNSC — Institute of Computing</span></div>
+      <div class="block-row"><span class="k">program</span><span class="v">BS Computer Science</span></div>
+      <div class="block-row"><span class="k">roles</span><span class="v">Capstone Lead · CTO @ I-Tech</span></div>
+      <div class="block-row"><span class="k">location</span><span class="v">Davao del Norte, PH</span></div>
+      <div class="block-row"><span class="k">prev_hash</span><span class="v">0x0000...genesis</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <p class="section-head"><span class="tag">02 — project ledger</span></p>
+    <div class="ledger">
+      <div class="project-block reveal">
+        <div class="project-hash">#0x4F2A9C1B</div>
+        <h3>DocuChain</h3>
+        <span class="project-role">Capstone Lead / Full-stack Developer</span>
+        <p class="project-desc">An enterprise document organization and integrity verification system built on Hyperledger Fabric, scoped for LAN-only deployment on DNSC's physical servers. Handles role-based access control, document upload/versioning, full-text search, and tamper-evident verification against the chain.</p>
+        <div class="tag-row">
+          <span class="tag">Hyperledger Fabric 2.5</span>
+          <span class="tag">Node.js / Express</span>
+          <span class="tag">React + Vite</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">MeiliSearch</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/limedrian-maker" target="_blank" rel="noopener">View on GitHub →</a>
+        </div>
+      </div>
+
+      <div class="project-block reveal">
+        <div class="project-hash">#0x7B18E203</div>
+        <h3>I-Tech</h3>
+        <span class="project-role">CTO</span>
+        <p class="project-desc">A 2D pixel-art RPG built for underserved markets across Southeast Asia, Latin America, and Africa, where "low-spec first" is a design constraint, not an afterthought. Leading technical direction alongside El Jane Bernal (CEO), Jamalee Qym Talento (COO), and Jhastter Rollon (CMO).</p>
+        <div class="tag-row">
+          <span class="tag">Game Architecture</span>
+          <span class="tag">Performance Optimization</span>
+          <span class="tag">2D Pixel Art</span>
+          <span class="tag">Team Leadership</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/limedrian-maker" target="_blank" rel="noopener">View on GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <p class="section-head"><span class="tag">03 — stack</span></p>
+    <div class="skills-grid">
+      <div class="skill-group reveal">
+        <h4>Blockchain & Backend</h4>
+        <div class="skill-list">
+          <span class="skill-pill">Hyperledger Fabric</span>
+          <span class="skill-pill">Node.js</span>
+          <span class="skill-pill">Express.js</span>
+          <span class="skill-pill">Sequelize</span>
+          <span class="skill-pill">PostgreSQL</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <h4>Frontend</h4>
+        <div class="skill-list">
+          <span class="skill-pill">React</span>
+          <span class="skill-pill">Vite</span>
+          <span class="skill-pill">HTML / CSS</span>
+          <span class="skill-pill">JavaScript</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <h4>Data & Tools</h4>
+        <div class="skill-list">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">scikit-learn</span>
+          <span class="skill-pill">MeiliSearch</span>
+          <span class="skill-pill">Git & GitHub</span>
+          <span class="skill-pill">UML / Systems Design</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <p class="section-head"><span class="tag">04 — contact</span></p>
+    <div class="terminal reveal">
+      <div class="terminal-bar"><span></span><span></span><span></span></div>
+      <div class="terminal-body">
+        <div class="terminal-line"><span class="prompt">$</span> whoami</div>
+        <div class="terminal-line"><span class="v">jake_edrian_lim — cs student, dnsc</span></div>
+        <div class="terminal-line"><span class="prompt">$</span> contact --list</div>
+        <div class="terminal-line"><span class="v">github</span> → <a href="https://github.com/limedrian-maker" target="_blank" rel="noopener">github.com/limedrian-maker</a></div>
+        <div class="terminal-line"><span class="v">email</span> → <a href="mailto:youremail@example.com">youremail@example.com</a></div>
+        <div class="terminal-line"><span class="prompt">$</span> <span class="cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Jake Edrian Lim. Built from scratch, no template.</span>
+  <span>Davao del Norte, Philippines</span>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.15});
+  revealEls.forEach(el=>io.observe(el));
+
+  // Hero hash-chain animation: draw a chain of linked blocks, lighting up left to right
+  const svgNS = "http://www.w3.org/2000/svg";
+  const chain = document.getElementById('heroChain');
+  const hashes = ["0a1f","7c3e","d92b","44ff","b810","e2a9","5f6c"];
+  const n = hashes.length;
+  const spacing = 1100 / n;
+  const cy = 45;
+
+  for(let i=0;i<n;i++){
+    const cx = spacing*i + spacing/2;
+    if(i>0){
+      const line = document.createElementNS(svgNS,'line');
+      line.setAttribute('x1', cx - spacing + 16);
+      line.setAttribute('y1', cy);
+      line.setAttribute('x2', cx - 16);
+      line.setAttribute('y2', cy);
+      line.setAttribute('class','chain-link');
+      line.dataset.index = i;
+      chain.appendChild(line);
+    }
+    const g = document.createElementNS(svgNS,'g');
+    g.setAttribute('class','chain-node');
+    g.dataset.index = i;
+    const circle = document.createElementNS(svgNS,'circle');
+    circle.setAttribute('cx', cx); circle.setAttribute('cy', cy); circle.setAttribute('r', 16);
+    const text = document.createElementNS(svgNS,'text');
+    text.setAttribute('x', cx); text.setAttribute('y', cy+4); text.setAttribute('text-anchor','middle');
+    text.textContent = hashes[i];
+    g.appendChild(circle); g.appendChild(text);
+    chain.appendChild(g);
+  }
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nodes = chain.querySelectorAll('.chain-node');
+  const links = chain.querySelectorAll('.chain-link');
+
+  if(reduceMotion){
+    nodes.forEach(n=>n.classList.add('lit'));
+    links.forEach(l=>l.classList.add('lit'));
+  } else {
+    let step = 0;
+    const total = nodes.length + links.length;
+    const seq = [];
+    for(let i=0;i<n;i++){
+      if(i>0) seq.push(links[i-1]);
+      seq.push(nodes[i]);
+    }
+    function litStep(){
+      if(step < seq.length){
+        seq[step].classList.add('lit');
+        step++;
+        setTimeout(litStep, 160);
+      }
+    }
+    setTimeout(litStep, 300);
+  }
+</script>
+
+</body>
+</html>
