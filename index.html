@@ -197,6 +197,44 @@
   }
   .project-links a:hover{color:var(--cyan); border-color:var(--cyan);}
 
+  /* ---------- PROJECT GALLERY ---------- */
+  .project-gallery{display:flex; gap:12px; margin-bottom:22px; flex-wrap:wrap;}
+  .gallery-thumb{
+    position:relative; width:150px; height:100px; border-radius:2px; overflow:hidden;
+    border:1px solid var(--line); cursor:pointer; background:var(--bg-panel-solid);
+    transition:border-color .2s, transform .2s;
+  }
+  .gallery-thumb img{width:100%; height:100%; object-fit:cover; display:block; opacity:0.9; transition:opacity .2s;}
+  .gallery-thumb:hover{border-color:var(--cyan); transform:translateY(-2px); box-shadow:0 0 16px var(--cyan-dim);}
+  .gallery-thumb:hover img{opacity:1;}
+  .gallery-thumb::before, .gallery-thumb::after{
+    content:""; position:absolute; width:10px; height:10px; border-style:solid; opacity:0; transition:opacity .2s;
+  }
+  .gallery-thumb::before{top:3px; left:3px; border-width:2px 0 0 2px; border-color:var(--cyan);}
+  .gallery-thumb::after{bottom:3px; right:3px; border-width:0 2px 2px 0; border-color:var(--magenta);}
+  .gallery-thumb:hover::before, .gallery-thumb:hover::after{opacity:1;}
+
+  .lightbox{
+    position:fixed; inset:0; z-index:100; background:rgba(5,7,12,0.92);
+    backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center;
+    padding:5vh 5vw;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox-frame{position:relative; max-width:900px; width:100%;}
+  .lightbox-frame img{width:100%; height:auto; border-radius:2px; display:block;
+    box-shadow:0 0 50px rgba(82,224,255,0.15), 0 0 90px rgba(201,100,255,0.10);}
+  .lightbox-frame::before, .lightbox-frame::after{
+    content:""; position:absolute; width:22px; height:22px; border-style:solid;
+  }
+  .lightbox-frame::before{top:-1px; left:-1px; border-width:2px 0 0 2px; border-color:var(--cyan);}
+  .lightbox-frame::after{bottom:-1px; right:-1px; border-width:0 2px 2px 0; border-color:var(--magenta);}
+  .lightbox-close{
+    position:absolute; top:-44px; right:0; font-family:'JetBrains Mono',monospace;
+    color:var(--text-muted); font-size:13px; cursor:pointer; border:1px solid var(--line);
+    padding:7px 14px; border-radius:var(--radius); transition:all .2s;
+  }
+  .lightbox-close:hover{color:var(--cyan); border-color:var(--cyan);}
+
   /* ---------- SKILLS ---------- */
   .skills-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:28px;}
   .skill-group{padding:26px;}
@@ -315,6 +353,11 @@
       <h3>DocuChain</h3>
       <span class="project-role">Capstone Programmer / Full-stack Developer</span>
       <p class="project-desc">An enterprise document organization and integrity verification system built on Hyperledger Fabric, scoped for LAN-only deployment on DNSC's physical servers. Handles role-based access control, document upload/versioning, full-text search, and tamper-evident verification against the chain.</p>
+      <div class="project-gallery">
+        <div class="gallery-thumb" data-full="docuchain-1.jpg"><img src="docuchain-1.jpg" alt="DocuChain screenshot 1"></div>
+        <div class="gallery-thumb" data-full="docuchain-2.jpg"><img src="docuchain-2.jpg" alt="DocuChain screenshot 2"></div>
+        <div class="gallery-thumb" data-full="docuchain-3.jpg"><img src="docuchain-3.jpg" alt="DocuChain screenshot 3"></div>
+      </div>
       <div class="tag-row">
         <span class="tag">Hyperledger Fabric 2.5</span>
         <span class="tag">Node.js / Express</span>
@@ -332,6 +375,11 @@
       <h3>i-Tech</h3>
       <span class="project-role">CTO</span>
       <p class="project-desc">A 2D pixel-art RPG built in Godot for underserved markets across Southeast Asia, Latin America, and Africa, where "low-spec first" is a design constraint, not an afterthought. Leading technical direction alongside El Jane Bernal (CEO), Jamalee Qym Talento (COO), and Jhastter Rollon (CMO).</p>
+      <div class="project-gallery">
+        <div class="gallery-thumb" data-full="itech-1.jpg"><img src="itech-1.jpg" alt="i-Tech screenshot 1"></div>
+        <div class="gallery-thumb" data-full="itech-2.jpg"><img src="itech-2.jpg" alt="i-Tech screenshot 2"></div>
+        <div class="gallery-thumb" data-full="itech-3.jpg"><img src="itech-3.jpg" alt="i-Tech screenshot 3"></div>
+      </div>
       <div class="tag-row">
         <span class="tag">Godot Engine</span>
         <span class="tag">GDScript</span>
@@ -400,6 +448,13 @@
   </div>
 </section>
 
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-frame">
+    <span class="lightbox-close" id="lightboxClose">CLOSE [X]</span>
+    <img id="lightboxImg" src="" alt="Project screenshot, enlarged">
+  </div>
+</div>
+
 <footer>
   <span>© 2026 Edrian Lim. Built from scratch, no template.</span>
   <span>Davao del Norte, Philippines</span>
@@ -413,6 +468,21 @@
     });
   }, {threshold:0.15});
   revealEls.forEach(el=>io.observe(el));
+
+  // Screenshot gallery lightbox
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  document.querySelectorAll('.gallery-thumb').forEach(thumb=>{
+    thumb.addEventListener('click', ()=>{
+      lightboxImg.src = thumb.dataset.full;
+      lightboxImg.alt = thumb.querySelector('img').alt;
+      lightbox.classList.add('open');
+    });
+  });
+  function closeLightbox(){ lightbox.classList.remove('open'); lightboxImg.src=''; }
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLightbox(); });
 </script>
 
 </body>
